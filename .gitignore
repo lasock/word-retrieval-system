@@ -1,0 +1,12 @@
+# Visual Studio Code files
+.vscode/
+*.code-workspace
+
+# py files
+*.py
+
+# 编译文件
+*.exe
+
+# 测试文件
+test.*
