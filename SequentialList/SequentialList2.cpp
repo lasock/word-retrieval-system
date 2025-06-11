@@ -108,7 +108,6 @@ public:
             cin >> word;
             cout << endl;
             if (!strcmp(word, "0")) break;
-            totalSearches++;
             for (int i = 0; word[i]; i++){
                 word[i] =  tolower(word[i]);
             }
@@ -128,6 +127,7 @@ public:
             if(l >= 0 && strcmp(words[l].word, word) == 0) {
                 auto end = chrono::high_resolution_clock::now();
                 totalAsl += asl;
+                totalSearches++;
                 cout << words[l].word << " 出现的次数为: " << words[l].frequency << endl
                          << "查找次数: " << asl << endl
                          << "查找时间: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << "μs" << endl;
