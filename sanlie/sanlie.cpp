@@ -43,17 +43,21 @@ unordered_map<string, int> countWordFrequency(const string& filename) {
 // 查询单词词频
 void queryWord(const unordered_map<string, int>& wordCount) {
     string word;
-    cout << "请输入要查询的单词: ";
-    cin >> word;
+	while(1){
+	    cout << "请输入要查询的单词(输入0结束): ";
+	    cin >> word;
+		if (word == "0") break;
+	
+	    string cleaned = cleanWord(word);
+	    auto it = wordCount.find(cleaned);
+	
+	    if (it != wordCount.end()) {
+	        cout << "单词 '" << cleaned << "' 出现次数: " << it->second << endl;
+	    } else {
+	        cout << "单词 '" << cleaned << "' 未找到！" << endl;
+	    }
+	}
 
-    string cleaned = cleanWord(word);
-    auto it = wordCount.find(cleaned);
-
-    if (it != wordCount.end()) {
-        cout << "单词 '" << cleaned << "' 出现次数: " << it->second << endl;
-    } else {
-        cout << "单词 '" << cleaned << "' 未找到！" << endl;
-    }
 }
 
 int main() {
