@@ -2,7 +2,8 @@
  #include <fstream>
 #include <cstring>
 // #include <cctype>
-// #include <ctime>
+#include <chrono>
+
 
 #define MAX_WORD_LEN 50
 using namespace std;
@@ -71,7 +72,7 @@ void insertWord(WordNode* head, const char* word){
 
 //判断是否为单词字符串
 bool isWordchar(char c){
-	if (isalpha(c) || c == '\'' || c=='-'){
+	if (isalpha(c) || c == '\'' || c=='-' || (c == '\'')){
 		return true;
 	}
 	return false;
@@ -142,12 +143,13 @@ void writeToFile(WordNode* list, const char* filename){
 //查询单词
 void searchWord(WordNode* list){
 	char word[MAX_WORD_LEN];
+	int totalSearches = 0;
+	int totalAsl = 0;
 	while (true){
 		cout << "请输入你要查询的单词(输入0结束查询):" ;
 		cin >> word;
-		cout << endl;
 		if (!strcmp(word, "0")){
-			return;
+			break;
 		}
 //		转小写
 		for (int i = 0; word[i]; i++){
@@ -155,19 +157,31 @@ void searchWord(WordNode* list){
 		}
 		
 		WordNode* curr = list->next;
+		
+		int asl = 0;
+		auto start = chrono::high_resolution_clock::now();
 
 		while (curr != nullptr){
+			asl++;
 			int cmp = strcmp(word, curr->word);
 			if (cmp == 0){
-				cout << curr->word << "出现的次数为: " << curr->frequency << endl;
+				auto end = chrono::high_resolution_clock::now();
+				totalAsl += asl;
+				totalSearches++;
+				cout << curr->word << "出现的次数为: " << curr->frequency << endl
+					 << "查找次数: " << asl << endl
+					 << "查找时间: " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << "ns" << endl;
 				break;
-			}else if(cmp < 0){
+			}
+			else if(cmp < 0){
 				cout << "未查询到" << word << endl;
 				break;
 			}
 			curr = curr->next;
 		}
+		cout << endl;
 	}
+	cout << "本次总查询的平均查找长度: "  << totalAsl * 1.0 / totalSearches << endl; 
 }
 
 // 遍历

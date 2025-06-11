@@ -121,7 +121,7 @@ public:
                     totalSearches++;
                     cout << words[i].word << " 出现的次数为: " << words[i].frequency << endl
                          << "查找次数: " << asl << endl
-                         << "查找时间: " << chrono::duration_cast<chrono::microseconds>(end - start).count() << "μs" << endl;
+                         << "查找时间: " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << "ns" << endl;
                     break;
                 } else if(strcmp(words[i].word, word) > 0) {
                     cout << "未查询到 " << word << endl;
@@ -135,7 +135,7 @@ public:
 
 // 判断是否为单词字符串
 bool isWordchar(char c){
-	if (isalpha(c) || c=='-'){
+	if (isalpha(c) || c=='-' || (c == '\'')){
 		return true;
 	}
 	return false;
